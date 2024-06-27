@@ -1,0 +1,191 @@
+:root{
+    --primary: #e97127;
+    --info: #7bbee5;
+    --ligth: #ffffff;
+    --grey: #dad8d8;
+    --dark: #000000; 
+    --secondary: #1d2256;
+}
+
+body{
+    overflow: hidden;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+    color: black;
+    background: var(--grey);
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.bg-light {
+    background-color: var(--ligth) !important;
+}
+
+#sidebar-container{
+    min-height: 100vh;
+}
+
+#sidebar-container .logo{
+    padding: .875rem 1.25rem;
+}
+
+#sidebar-container .menu{
+    width: 18rem;
+}
+
+.avatar {
+    max-width: 35px;
+}
+
+.logo img {
+    width: 80px
+}
+
+.navbar {
+    padding: 0.1rem 1rem;
+}
+
+.color{
+    background: var(--grey);
+    font-family: "Open Sans", sans-serif;
+    overflow: hidden;
+}
+
+:hover .compre{
+text-decoration: none;
+}
+
+.nalga{
+    width: 150px;
+    font-size: 12px;
+    border-radius: 10px;
+}
+
+.luis {
+    margin-left: -12px;
+    font-size: 18px;
+}
+
+.hola {
+ padding-bottom: 30px;
+}
+
+/* CLASE PARA LAS ALERTAS DEL LOGIN*/
+.my-popup-class {
+    width: 1000px !important; /* Ajusta el ancho según tu preferencia */
+    max-width: 400px !important; /* Ajusta el ancho máximo según tu preferencia */
+    height: 320px;
+}
+
+
+
+/*PARA LOS BOTONES DEL DASHBOARD*/
+.botoncito{
+    max-width: 150px;
+    height: -20px;
+    width: 700px;
+    background-color: var(--info);
+    cursor: pointer;
+    margin-right: 20px;
+    font-size: 20px;
+    top: 700px;
+    border-bo: #000000;
+}
+
+
+.clock {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px; /* Tamaño más pequeño del texto */
+    color: rgb(0, 0, 0);
+    width: 100px; /* Ancho más pequeño */
+    height: 30px; /* Altura automática */
+    /*border: 2px solid black;*/
+    padding: 5px; /* Relleno más pequeño */
+    position: absolute; /* Establece la posición absoluta */
+    right: 10px; /* Lo coloca en la parte derecha */  
+    top: 61px;
+}
+
+/*PALABRA DASHBOARD ADMIN*/
+.adminboard{
+
+}
+
+.puto{
+    font-size: 30px;
+}
+
+/*GRAFICA DE BARRAS 1*/
+.grafica-container {
+    width: 50%; /* Ancho del contenedor */
+    height: 330px; /* Alto del contenedor */
+}
+
+.custom-chart {
+    background-color: #f8f9fa; /* Color de fondo */
+    border-radius: 5px; /* Borde redondeado */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    border: 1px solid #dee2e6; /* Borde */
+    margin-top: 60px;
+}
+
+.cuadro {
+    background-color: #f8f9fa; /* Color de fondo */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #dee2e6; /* Borde */
+    border-radius: 10px; /* Esquinas redondeadas */
+    width: 200px; /* Ancho del cuadro */
+    position: fixed; /* Posición fija */
+    top: 50%; /* Posición vertical */
+    right: 20px; /* Posición horizontal */
+    transform: translateY(-50%); /* Centrar verticalmente */
+    }
+
+
+
+
+.cuadro2 {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 2px solid #dee2e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    
+}
+
+/* Estilos para el contenedor de los cuadros */
+.cuadros-container {
+    position: fixed;
+    top: 40px;
+    right: 5px;
+    width: 220px;
+}
+
+.cuadro-con-sombra {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    width: 900px;
+    right: 500px;
+    margin-left: 10px;
+}
+
+.cuadro-con-sombra2 {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    width: 900px;
+    margin-left: 10px;
+}
+
+
+
+td {
+    border-bottom: 1px solid rgb(0, 0, 0);
+}

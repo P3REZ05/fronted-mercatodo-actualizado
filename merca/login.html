@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>LOGIN</title>
+    <style>
+        body {
+            background: var(--secondary);
+            background: linear-gradient(to right, var(--info), var(--secondary));
+        }
+
+        .bg {
+            background-image: url(img/3D.png);
+            background-position: center center;
+            background-size: cover;
+            height: 100vh; /* Ajusta la altura de la imagen */
+        }
+
+        .login-container {
+            background-color: white; /* Fondo blanco */
+            padding: 20px; /* Ajusta el espaciado interno */
+        }
+
+        .small-input {
+            width: 70%; /* Ajusta el ancho de los inputs */
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Imagen fuera del contenedor -->
+        <div class="col-6 bg"></div>
+        <div class="col-6 d-flex align-items-center">
+            <!-- Contenedor blanco para el login -->
+            <div class="login-container rounded shadow p-4 ml-5">
+                <h2 class="fw-bold text-center mb-4">BIENVENIDO</h2>
+                <div class="d-grid mb-3">
+                    <div class="btn-group hola btn-group-toggle " data-toggle="buttons">
+                        <label class="btn btn-secondary nalga active">
+                            <input type="radio" name="options" id="option1" checked> EMPLEADO
+                        </label>
+                        <label class="btn btn-secondary nalga">
+                            <input type="radio" name="options" id="option2"> ADMINISTRADOR
+                        </label>
+                    </div>
+                    <form id="form-login">
+                        <div class="form-group">
+                            <label for="nombre" class="form-label">NOMBRE</label>
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre">
+                            <div id="nombre-error" class="text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contraseña" class="form-label">CONTRASEÑA</label>
+                            <input type="password" class="form-control form-control-sm" id="contraseña" name="contraseña">
+                            <div id="contraseña-error" class="text-danger"></div>
+                        </div>
+                        <!-- Utilizando las clases de Bootstrap para centrar el botón -->
+                        <div class="text-center">
+                            <a href="dashboardadmin.html"><button type="submit" class="btn btn-primary">INGRESAR</button></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+
+
+
+
+</body>
+</html>

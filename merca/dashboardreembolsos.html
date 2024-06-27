@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" 
+    
+    rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>DASHBOARD REEMBOLSO</title>
+    <!-- Estilos personalizados -->
+  </head>
+  <body>
+    <div class="d-flex">
+        <div id="sidebar-container" class="bg-primary" style="width: 230px">
+            <div class="logo">
+                <img src="img/3D.png" class="">
+            </div>
+            <div class="nav-bar ">
+              <!-- boton izquierdo nav-->
+  <button type="button" class="btn luis btn--primary btn-sm p-3 mr-1 ">
+
+    <a href="dashboardadmin.html" class=" font-weight-bold p-1 text-dark">
+
+      <i class="icon ion-md-cart lead p-2">
+      </i>
+      COMPRAS
+      </a>  
+  </button>
+
+              <!--boton derecho nav-->
+  <button type="button" class="btn btn--primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+  </button>
+
+  <div class="dropdown-menu dropdown-menu-right">
+    <a class="dropdown-item" href="inventarioadmin.html">INVENTARIO</a>
+    <a class="dropdown-item" href="proveedoresadmin.html">PROVEEDORES</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="historialadmin.html">HISTORIAL</a>
+  
+  </div>
+
+
+
+                <a href="devolucionedadmin.html" class="d-block text-dark p-3 font-weight-bold"><i class="icon ion-md-archive mr-2 lead"></i> DEVOLUCIONES</a>
+
+                <a href="empleadoadmin.html" class="d-block text-dark p-3 font-weight-bold"><i class="icon ion-md-stopwatch mr-2 lead"></i> EMPLEADOS</a>
+            </div>
+        </div>
+        
+        
+        <div class="w-100">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <!-- Espacio para el texto izquierdo -->
+              <div class="navbar-text">
+                <a class="nav-link disabled font-weight-bold" href="#" tabindex="-1" aria-disabled="true">Hola, Usuario</a>
+              </div>
+              <!-- Imagen alineada a la derecha -->
+              <div class="navbar-text">
+                <img src="img/user.png" class="img-fluid rounded-circle avatar mr-2">
+              </div>
+            </div>
+          </nav>
+
+          <a class="nav-link disabled adminboard text-dark ml-3 font-weight-bold" href="#">DASHBOARD REEMBOLSOS</a>
+
+          <div class="container mt-2">
+          <a class="btn btn-primary text-dark botoncito font-weight-bold" href="dashboardadmin.html" role="button">VENTAS</a>
+          <a class="btn btn-primary text-dark botoncito font-weight-bold" href="dashboardreembolsos.html" role="button">REEMBOLSO</a>
+          <a class="btn btn-primary text-dark botoncito font-weight-bold" href="#" role="button">COMPRAS</a>
+          <a class="btn btn-primary text-dark botoncito font-weight-bold" href="#" role="button">REPORTE</a>
+          
+            <div class="nav-link d-inline-block">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filtrar
+          </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="px-4 py-3">
+                    <div class="form-group">
+                        <label for="fechaInicial">Fecha Inicial</label>
+                        <input type="date" class="form-control" id="fechaInicial">
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaFinal">Fecha Final</label>
+                        <input type="date" class="form-control" id="fechaFinal">
+                    </div>
+                    <div class="form-group">
+                        <label for="proveedor">Proveedor</label>
+                        <select class="form-control" id="proveedor">
+                            <option value="">Seleccione un proveedor</option>
+                            <!-- Opciones de proveedor -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria">Categoría</label>
+                        <select class="form-control" id="categoria">
+                            <option value="">Seleccione una categoría</option>
+                            <!-- Opciones de categoría -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </a>
+    
+
+          <div class="clock font-weight-bold" id="clock"></div>
+
+          <div style="margin-top: 20px;"> 
+          <div class="grafica-container custom-chart ml-3 " style="float: left; width: 45%;">
+            <canvas class="p-2" id="myChart"></canvas>
+        </div>
+        </div>
+
+
+
+
+          <!--GRAFICA DE BARRAS-->
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          
+          <script>
+            const ctx = document.getElementById('myChart');
+          
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: ['LECHE', 'PAN TAJADO','YOGURT', 'AREPAS', 'SALSAS', 'SHAMPOO'],
+                datasets: [{
+                  label: 'PRODUCTOS DEVUELTOS',
+                  data: [20, 15, 3, 13, 2, 11],
+                  backgroundColor: [ // Matriz de colores
+                  'rgba(255, 99, 132, 0.2)', // Rojo
+                  'rgba(54, 162, 235, 0.2)', // Azul
+                  'rgba(255, 206, 86, 0.2)', // Amarillo
+                  'rgba(75, 192, 192, 0.2)', // Verde
+                  'rgba(153, 102, 255, 0.2)', // Morado
+                  'rgba(255, 159, 64, 0.2)' // Naranja
+              ],
+                borderColor: [ // Colores de borde
+                'rgba(255, 99, 132, 1)', // Rojo
+                'rgba(54, 162, 235, 1)', // Azul
+                'rgba(255, 206, 86, 1)', // Amarillo
+                'rgba(75, 192, 192, 1)', // Verde
+                'rgba(153, 102, 255, 1)', // Morado
+                'rgba(255, 159, 64, 1)' // Naranja
+            ],
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+
+            
+            const data = {
+              labels: [
+                'Red',
+                'Blue',
+                'Yellow'
+              ],
+              datasets: [{
+                label: 'My First Dataset',
+                data: [300, 50, 100],
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+              }]
+            };
+            
+          </script>
+          <div style="padding-right: 240px;">
+            <div class="grafica-container custom-chart" style="float: right; width: 40%;">
+              <canvas id="myChart1" width="400" height="400"></canvas>
+            </div>
+          </div>
+
+        <!-- Script para la segunda gráfica -->
+        <script>
+            let miCanvas = document.getElementById("myChart1").getContext("2d");
+
+            var chart = new Chart(miCanvas, {
+                type: 'pie',
+                data: {
+                    labels: ['MAL ESTADO','MAL ASPECTO', 'SIN MOTIVO', 'VENCIDOS'],
+                    datasets: [{
+                        label: "GRAFICA MOTIVOS",
+                        backgroundColor:  [ // Colores de borde
+                        'rgba(255, 99, 132, 1)', // Rojo
+                        'rgba(54, 162, 235, 1)', // Azul
+                        'rgba(255, 206, 86, 1)', // Amarillo
+                        'rgba(75, 192, 192, 1)', // Verde
+                        'rgba(153, 102, 255, 1)', // Morado
+                        'rgba(255, 159, 64, 1)'],
+                        borderColor: [ // Colores de borde
+                'rgba(255, 99, 132, 1)', // Rojo
+                'rgba(54, 162, 235, 1)', // Azul
+                'rgba(255, 206, 86, 1)', // Amarillo
+                'rgba(75, 192, 192, 1)', // Verde
+                'rgba(153, 102, 255, 1)', // Morado
+                'rgba(255, 159, 64, 1)'], // Naranja,
+                        borderWidth: 1,
+                        data: [12, 30, 5, 24]
+                    }],
+                    
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+
+        
+        <div class="cuadros-container">
+          <div>  <h2 style="margin-top: 20px;">Novedades</h2></div>
+          <div class="cuadro2">
+              <!-- Primer cuadro -->
+              <h4>GRAFICO 1</h4>
+              <p>Esta es la representación de productos que mas han devuelto por PROVEEDORES.</p>
+          </div>
+          <div class="cuadro2">
+              <!-- Segundo cuadro -->
+              <h4>GRAFICO 2</h4>
+              <p>Esta es la representación de los motivos de devolucion de los productos.</p>
+          </div>
+          <div class="cuadro2 font-weight-bold">
+              <!-- Tercer cuadro -->
+              <h4>ADVERTENCIA</h4>
+              <p>TENER CUIDADO CON LAS BOLSAS DE LECHE POR MOTIVO DE CADUCACÍON PROPIA.</p>
+          </div>
+      </div>
+
+      <div style="clear:both;"></div>
+
+    <h3 style="margin-top: 1px;">Lista de Productos Menos Vendidos</h3>
+    
+    <div class="row cuadro-con-sombra font-weight-bold">
+        <div class="col-md-3">
+            <ul>
+                <li>LEHCE</li>
+                <li>PAN TAJADO</li>
+                <li>AREPAS</li>
+                <!-- Agrega más productos según sea necesario -->
+            </ul>
+        </div>
+        <div class="col-md-3">
+          <ul>
+            <li>PAN CONCHA</li>
+            <li>YOGURT</li>
+            <li>SALSA ROSADA</li>
+            <!-- Agrega más productos según sea necesario -->
+        </ul>
+        </div>
+        <div class="col-md-4 ">
+          <ul>
+            <li>JAMÓN</li>
+            <li>PONQUE</li>
+            <li>QUESO</li>
+            <!-- Agrega más productos según sea necesario -->
+        </ul>
+        </div>
+        
+    </div>
+
+        
+          
+          
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<title>Factura de Productos</title>
+<style>
+  /* Estilo para los elementos en línea */
+  .form-inline > * {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px; /* Espacio entre elementos */
+  }
+
+  /* Estilo adicional para los botones */
+  .form-inline input[type="submit"], #realizar-venta {
+    margin-top: 8px; /* Alineación vertical */
+    background-color: #3498db; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar por encima */
+  }
+
+  .form-inline input[type="submit"]:hover, #realizar-venta:hover {
+    background-color: #2980b9; /* Cambio de color al pasar por encima */
+  }
+
+  /* Estilo para las facturas */
+  #factura-principal, #factura-secundaria {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+    width: 45%; /* Ancho de cada factura */
+    display: inline-block; /* Para que estén en línea */
+    vertical-align: top; /* Alineación superior */
+    text-align: center; /* Alineación centrada */
+    position: relative; /* Posición relativa */
+    z-index: 1; /* Sobreponer sobre el logo */
+  }
+
+  #factura-principal h1, #factura-secundaria h1 {
+    margin-top: 0; /* Eliminar margen superior */
+  }
+
+  #factura-principal table, #factura-secundaria table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #factura-principal th, #factura-principal td, #factura-secundaria th, #factura-secundaria td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  #factura-principal th {
+    background-color: #f2f2f2;
+  }
+
+  /* Estilo para la lista de productos agregados */
+  #lista-productos, #factura-productos {
+    text-align: left;
+  }
+
+  #lista-productos th, #lista-productos td, #factura-productos th, #factura-productos td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  /* Estilo para los botones de editar y eliminar */
+  .edit-delete-buttons button, #realizar-venta {
+    background-color: #4CAF50; /* Color de fondo verde */
+    border: none;
+    color: white; /* Color del texto */
+    padding: 5px 10px; /* Espaciado interno */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 2px 2px;
+    cursor: pointer;
+    border-radius: 3px; /* Bordes redondeados */
+  }
+
+  .edit-delete-buttons button:hover, #realizar-venta:hover {
+    background-color: #45a049; /* Cambio de color al pasar por encima */
+  }
+
+  /* Estilo para la imagen de Mercatodo */
+  #mercatodo-logo {
+    position: absolute; /* Posición absoluta */
+    top: 50%; /* Centrar verticalmente */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translate(-50%, -50%); /* Centrar respecto al centro */
+    opacity: 0.2; /* Poca opacidad */
+    pointer-events: none; /* Evitar interacción del usuario */
+    z-index: -1; /* Enviar detrás del contenido */
+  }
+
+  /* Estilos para las ventanas emergentes */
+  .modal {
+    display: none; /* Ocultar por defecto */
+    position: fixed; /* Posición fija */
+    z-index: 1; /* Establecer la ventana emergente sobre el contenido */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    overflow: auto; /* Habilitar el desplazamiento */
+    background-color: rgb(0,0,0); /* Fondo negro */
+    background-color: rgba(0,0,0,0.4); /* Fondo negro con opacidad */
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Centrar vertical y horizontalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ancho del contenido */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* Sombra */
+  }
+
+  /* Estilos para los botones de la ventana emergente */
+  .modal-content button {
+    background-color: #4CAF50; /* Color de fondo verde */
+    border: none;
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px; /* Margen exterior */
+    cursor: pointer;
+    border-radius: 3px; /* Bordes redondeados */
+  }
+
+  .modal-content button:hover {
+    background-color: #45a049; /* Cambio de color al pasar por encima */
+  }
+</style>
+<!-- Bootstrap CSS -->
+
+</head>
+<body>
+<div class="d-flex">
+  <div id="sidebar-container" class="bg-primary" style="width: 230px">
+    <div class="logo">
+      <img src="Mercatodo_logo.png" class="">
+    </div>
+    <div class="menu">
+      <a href="ventas.html" class="d-block text-dark p-3 font-weight-bold"><i class="icon ion-md-cart mr-2 lead"></i> VENTAS</a>
+      <a href="inventario.html" class="d-block text-dark p-3 font-weight-bold"><i class="icon ion-md-archive mr-2 lead"></i> INVENTARIO</a>
+      <a href="historial.html" class="d-block text-dark p-3 font-weight-bold"><i class="icon ion-md-stopwatch mr-2 lead"></i> HISTORIAL</a>
+    </div>
+  </div>
+
+  <div class="w-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- Espacio para el texto izquierdo -->
+        <div class="navbar-text">
+          <a class="nav-link disabled font-weight-bold" href="#" tabindex="-1" aria-disabled="true">Hola, Usuario</a>
+        </div>
+        <!-- Imagen alineada a la derecha -->
+        <div class="navbar-text">
+          <img src="user.png" class="img-fluid rounded-circle avatar mr-2">
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<form class="form-inline" id="formulario" onsubmit="return agregarProducto()">
+  <label for="producto">Producto:</label>
+  <select id="producto" name="producto" onchange="actualizarCategoria()">
+    <option value="">Selecciona un producto</option>
+    <option value="leche">Leche</option>
+    <option value="queso">Queso</option>
+    <option value="yogurt">Yogurt</option>
+    <option value="kummis">Kummis</option>
+    <option value="cuajada">Cuajada</option>
+    <option value="cepillo">Cepillo de dientes</option>
+    <option value="jabon">Jabón</option>
+    <option value="shampoo">Shampoo</option>
+  </select>
+
+  <label for="cantidad">Cantidad:</label>
+  <input type="number" id="cantidad" name="cantidad" min="1" pattern="[0-9]*" required>
+
+  <label for="categoria">Categoría:</label>
+  <input type="text" id="categoria" name="categoria" readonly>
+
+  <input type="submit" value="Agregar producto">
+</form>
+
+<div id="factura-secundaria">
+  <h1>Productos Agregados</h1>
+  <table id="lista-productos">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Categoría</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Aquí se mostrarán los productos agregados -->
+    </tbody>
+  </table>
+</div>
+
+<div id="factura-principal">
+  <img id="mercatodo-logo" src="Mercatodo_logo.png" alt="Logo de Mercatodo">
+  <h1>Mercatodo</h1>
+  <p>N.00001</p>
+  <p>Carrera 31# 003 calle 29 La Pintada/Calle vieja</p>
+  <p>+57 3207095451</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre del Producto</th>
+        <th>Cantidad</th>
+        <th>Valor del Producto</th>
+        <th>Valor Total</th>
+      </tr>
+    </thead>
+    <tbody id="factura-productos">
+      <!-- Aquí se mostrarán los productos de la factura -->
+    </tbody>
+  </table>
+  <p id="subtotal">Sub Total: $0</p>
+  <p>Cliente: 000002</p>
+  <p>Vendedor: Daniel A.</p>
+  <button id="realizar-venta" onclick="confirmarVenta()">Realizar venta</button>
+</div>
+
+<!-- Ventana emergente de confirmación -->
+<div id="modal-confirmacion" class="modal">
+  <div class="modal-content">
+    <p>¿Estás seguro de realizar la venta?</p>
+    <button onclick="realizarVenta()">Sí</button>
+    <button onclick="cerrarModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- Ventana emergente de venta realizada -->
+<div id="modal-venta-realizada" class="modal">
+  <div class="modal-content">
+    <p>Venta realizada</p>
+    <button onclick="cerrarModalVentaRealizada()">Cerrar</button>
+  </div>
+</div>
+
+<script>
+// Precios de los productos en pesos colombianos (COP)
+const precios = {
+  leche: 2500,
+  queso: 3000,
+  yogurt: 1500,
+  kummis: 2000,
+  cuajada: 2200,
+  cepillo: 1000,
+  jabon: 1200,
+  shampoo: 2500
+};
+
+function actualizarCategoria() {
+  var producto = document.getElementById("producto").value;
+  var categoriaInput = document.getElementById("categoria");
+
+  switch (producto) {
+    case "leche":
+    case "queso":
+    case "yogurt":
+    case "kummis":
+    case "cuajada":
+      categoriaInput.value = "Lácteos";
+      break;
+    case "cepillo":
+    case "jabon":
+    case "shampoo":
+      categoriaInput.value = "Aseo personal";
+      break;
+    default:
+      categoriaInput.value = "";
+  }
+}
+
+function agregarProducto() {
+  var producto = document.getElementById("producto").value;
+  var cantidad = document.getElementById("cantidad").value;
+  var categoriaInput = document.getElementById("categoria");
+  var listaProductos = document.getElementById("lista-productos");
+  var facturaProductos = document.getElementById("factura-productos");
+
+  if (producto && cantidad) {
+    var precio = precios[producto];
+    var subtotal = precio * cantidad;
+    var newRow = listaProductos.insertRow(-1);
+    newRow.innerHTML = `
+      <td>${producto}</td>
+      <td>${categoriaInput.value}</td>
+      <td>${cantidad}</td>
+      <td>$${precio.toLocaleString()}</td>
+      <td>$${subtotal.toLocaleString()}</td>
+      <td class="edit-delete-buttons"><button onclick="editarCantidad(this)">Editar</button> <button onclick="eliminarProducto(this)">Eliminar</button></td>
+    `;
+
+    // También agregar a la factura principal
+    var newRowFactura = facturaProductos.insertRow(-1);
+    newRowFactura.innerHTML = `
+      <td>${producto}</td>
+      <td>${cantidad}</td>
+      <td>$${precio.toLocaleString()}</td>
+      <td>$${subtotal.toLocaleString()}</td>
+    `;
+
+    // Limpiar campos después de agregar el producto
+    document.getElementById("producto").value = "";
+    document.getElementById("cantidad").value = "";
+    document.getElementById("categoria").value = "";
+
+    // Actualizar subtotal en factura principal
+    actualizarSubtotal(subtotal);
+  } else {
+    alert("Por favor selecciona un producto y especifica la cantidad.");
+  }
+
+  return false; // Para evitar que el formulario se envíe
+}
+
+function actualizarSubtotal(subtotalProducto) {
+  var subtotalActual = parseFloat(document.getElementById("subtotal").textContent.replace('Sub Total: $', '').replace(',', ''));
+  var subtotalTotal = subtotalActual + subtotalProducto;
+  document.getElementById("subtotal").textContent = `Sub Total: $${subtotalTotal.toLocaleString()}`;
+}
+
+function editarCantidad(button) {
+  var row = button.parentNode.parentNode;
+  var cantidadCell = row.cells[2];
+  var cantidadActual = cantidadCell.textContent;
+  cantidadCell.innerHTML = `<input type="number" value="${cantidadActual}" min="1" pattern="[0-9]*" onchange="actualizarSubtotalEdicion(this, ${row.rowIndex})">`;
+}
+
+function actualizarSubtotalEdicion(input, rowIndex) {
+  var cantidadNueva = input.value;
+  var precioProducto = parseFloat(document.getElementById("factura-productos").rows[rowIndex].cells[2].textContent.replace('$', '').replace(',', ''));
+  var subtotalNuevo = precioProducto * cantidadNueva;
+  var precioTotalNuevo = subtotalNuevo;
+  document.getElementById("factura-productos").rows[rowIndex].cells[3].textContent = `$${precioTotalNuevo.toLocaleString()}`;
+  actualizarSubtotal(subtotalNuevo);
+}
+
+function eliminarProducto(button) {
+  var row = button.parentNode.parentNode;
+  var subtotalProducto = parseFloat(row.cells[4].textContent.replace('$', '').replace(',', ''));
+  var subtotalActual = parseFloat(document.getElementById("subtotal").textContent.replace('Sub Total: $', '').replace(',', ''));
+  var subtotalTotal = subtotalActual - subtotalProducto;
+  document.getElementById("subtotal").textContent = `Sub Total: $${subtotalTotal.toLocaleString()}`;
+  row.parentNode.removeChild(row);
+
+  // También eliminar de la factura principal
+  var index = row.rowIndex;
+  document.getElementById("factura-productos").deleteRow(index);
+}
+
+function confirmarVenta() {
+  var modal = document.getElementById("modal-confirmacion");
+  modal.style.display = "block";
+}
+
+function realizarVenta() {
+  // Realizar la venta aquí
+  alert("Venta realizada con éxito.");
+  reiniciarTodo();
+}
+
+function cerrarModal() {
+  var modal = document.getElementById("modal-confirmacion");
+  modal.style.display = "none";
+}
+
+function cerrarModalVentaRealizada() {
+  var modal = document.getElementById("modal-venta-realizada");
+  modal.style.display = "none";
+}
+
+function reiniciarTodo() {
+  // Reiniciar las listas y la factura
+  document.getElementById("lista-productos").innerHTML = "";
+  document.getElementById("factura-productos").innerHTML = "";
+  document.getElementById("subtotal").textContent = "Sub Total: $0";
+  // Mostrar ventana emergente de venta realizada
+  var modal = document.getElementById("modal-venta-realizada");
+  modal.style.display = "block";
+}
+</script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEw3Yj5bW7xJcNfBSQz2HI3mK5WnQK" crossorigin="anonymous"></script>
+</body>
+</html>
